@@ -44,4 +44,5 @@ for i in range(0, 5):
     images_to_show.append(x_test[r])        
     titles_to_show.append('test image [' + str(r) + '] = ' + str(y_test[r]))
 
-show_images(images_to_show, titles_to_show)
+# Toggle to show images
+#show_images(images_to_show, titles_to_show)
