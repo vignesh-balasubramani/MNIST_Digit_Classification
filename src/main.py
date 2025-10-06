@@ -54,7 +54,7 @@ class CNN(nn.Module):
     
     def forward(self, x):
         x = F.relu(F.max_pool2d(self.conv1(x), 2))
-        x = F.relu(F.max_pool2d(self.conv2_drop(self.conv2(x))), 2)
+        x = F.relu(F.max_pool2d(self.conv2_drop(self.conv2(x)), 2))
         x = x.view(-1, 320)
         x = F.relu(self.fc1(x))
         x = F.dropout(x, training=self.training)
@@ -78,7 +78,7 @@ def train(epoch):
         loss.backward()
         optimizer.step()
         if batch_idx % 25 == 0:
-            print(f'Train Epoch: {epoch} [{batch_idx * len(data)} / {len(train_loader.dataset)} ({100. * batch_idx / len(train_dataset):.0: .0f}%)]\t{loss.item():.6f}')
+            print(f'Train Epoch: {epoch} Loss: {loss.item():.6f}')
 
 def test():
     model.eval()
@@ -91,10 +91,10 @@ def test():
             output = model(data)
             test_loss += loss_fn(output, target).item()
             pred = output.argmax(dim = 1, keepdim = True)
-            correct += pred.eq(target.view_as(pred).sum().item())
+            correct += pred.eq(target.view_as(pred)).sum().item()
 
     test_loss /= len(test_loader.dataset)
-    print(f'\nTest set: Average loss: {test_loss:.4f}, Accuracy: {correct}/{len(test_loader.dataset)} ({100. * correct / len(test_loader.dataset):.0f}%\n)')
+    print(f'\nTest set: Average loss: {test_loss:.4f}, Accuracy: {correct}/{len(test_loader.dataset)}\n)')
 
 #Training
 for epoch in range(1, 11):
