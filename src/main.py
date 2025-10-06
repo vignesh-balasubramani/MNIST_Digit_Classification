@@ -29,18 +29,18 @@ x_train = np.expand_dims(x_train, 1)
 x_test  = np.expand_dims(x_test, 1)
 
 # Convert to tensors
-x_train_tensor = torch.tensor(x_train, dtype = torch.float32)
-y_train_tensor = torch.tensor(y_train, dtype = torch.long)
+x_train_tensor = torch.tensor(x_train)
+y_train_tensor = torch.tensor(y_train)
 
-x_test_tensor = torch.tensor(x_test, dtype = torch.float32)
-y_test_tensor = torch.tensor(y_test, dtype = torch.long)
+x_test_tensor = torch.tensor(x_test)
+y_test_tensor = torch.tensor(y_test)
 
 # Preparing the dataset
 train_dataset = TensorDataset(x_train_tensor, y_train_tensor)
 test_dataset = TensorDataset(x_test_tensor, y_test_tensor)
 
 train_loader = DataLoader(train_dataset, batch_size = 64, shuffle = True)
-test_loader = DataLoader(test_dataset, batch_size = 64)
+test_loader = DataLoader(test_dataset, batch_size = 64, shuffle= True)
 
 # CNN Architecture
 class CNN(nn.Module):
